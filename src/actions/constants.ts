@@ -1,3 +1,5 @@
 export const actions = {
-    ACTION_TYPE: "action"
+    GET_QUOTE: "get_quote",
+    GET_QUOTE_OLD: 'get_quote_old'
+
   }
