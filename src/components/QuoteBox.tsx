@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { actions } from "../actions/constants";
+import { getNewQuoteOld } from "../actions/quote";
 import { appState } from "../types/state.types";
 
 const mapStateToProps = (state: appState) => ({
@@ -9,31 +8,25 @@ const mapStateToProps = (state: appState) => ({
   author: state.quoteOldModule.author,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    getNewQoute: () => dispatch({ type: actions.GET_QUOTE_OLD }),
-  };
-};
-
 const QuoteBox: React.FC = (props: any) => {
-  const { text, author, getNewQoute } = props;
+  const { text, author, getNewQuoteOld } = props;
 
    useEffect(() => {
-       getNewQoute()
-   }, [getNewQoute])
-   
+    getNewQuoteOld()
+   }, [getNewQuoteOld])
+
   return (
     <div id="quote-box">
       <p id="text">"{text}"</p>
       <p id="author">-{author}</p>
-      <a id="tweet-quote" href="twitter.com/intent/tweet" target="_blank">
+      <a id="tweet-quote" href={`https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text="${text}" ${author}`} target="_top">
         Tweeter
       </a>
-      <button id="new-quote" onClick={() => getNewQoute()}>
+      <button id="new-quote" onClick={() => getNewQuoteOld()}>
         New Quote
       </button>
     </div>
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuoteBox);
+export default connect(mapStateToProps,{getNewQuoteOld})(QuoteBox);
